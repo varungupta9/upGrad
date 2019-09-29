@@ -13,18 +13,14 @@ public class ImageRepository {
     //Get an instance of EntityManagerFactory from persistence unit with name as 'imageHoster'
     @PersistenceUnit(unitName = "imageHoster")
     private EntityManagerFactory emf;
-
-
     //The method receives the Image object to be persisted in the database
     //Creates an instance of EntityManager
     //Starts a transaction
     //The transaction is committed if it is successful
     //The transaction is rolled back in case of unsuccessful transaction
     public Image uploadImage(Image newImage) {
-
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
-
         try {
             transaction.begin();
             em.persist(newImage);
@@ -34,7 +30,6 @@ public class ImageRepository {
         }
         return newImage;
     }
-
     //The method creates an instance of EntityManager
     //Executes JPQL query to fetch all the images from the database
     //Returns the list of all the images fetched from the database
@@ -42,10 +37,8 @@ public class ImageRepository {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Image> query = em.createQuery("SELECT i from Image i", Image.class);
         List<Image> resultList = query.getResultList();
-
         return resultList;
     }
-
     //The method creates an instance of EntityManager
     //Executes JPQL query to fetch the image from the database with corresponding title
     //Returns the image in case the image is found in the database
@@ -59,7 +52,6 @@ public class ImageRepository {
             return null;
         }
     }
-
     //The method creates an instance of EntityManager
     //Executes JPQL query to fetch the image from the database with corresponding id
     //Returns the image fetched from the database
@@ -69,7 +61,6 @@ public class ImageRepository {
         Image image = typedQuery.getSingleResult();
         return image;
     }
-
     //The method receives the Image object to be updated in the database
     //Creates an instance of EntityManager
     //Starts a transaction
@@ -78,7 +69,6 @@ public class ImageRepository {
     public void updateImage(Image updatedImage) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
-
         try {
             transaction.begin();
             em.merge(updatedImage);
@@ -87,7 +77,6 @@ public class ImageRepository {
             transaction.rollback();
         }
     }
-
     //The method receives the Image id of the image to be deleted in the database
     //Creates an instance of EntityManager
     //Starts a transaction
@@ -99,7 +88,6 @@ public class ImageRepository {
     public void deleteImage(Integer imageId) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
-
         try {
             transaction.begin();
             Image image = em.find(Image.class, imageId);
@@ -109,5 +97,4 @@ public class ImageRepository {
             transaction.rollback();
         }
     }
-
 }

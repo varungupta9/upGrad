@@ -13,15 +13,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
-
-@Controller
+//Comment Controller Class
+@Controller //
 public class CommentController {
     @Autowired
     private CommentService commentService;
 
     @Autowired
     private ImageService imageService;
-
+    //This controller method is called when the request pattern is of type '/image/{imageId}/{imageTitle}/comments' and also the incoming request is of POST type
+    //set the comments from the user of the image by getting the logged in user from the Http Session
+    //set the current date
+    //insert the comment by calling the insertComment of commentService
+    //redirects to images.html with imageid and title
     @RequestMapping(value = "/image/{imageId}/{imageTitle}/comments", method = RequestMethod.POST)
     public String createComment(@PathVariable("imageId") Integer imageId, @PathVariable("imageTitle") String title, @RequestParam("comment") String text, HttpSession session) {
         User user = (User) session.getAttribute("loggeduser");
